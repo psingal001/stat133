@@ -1,0 +1,5 @@
+name = "Pranay Singal"
+SID = "24347754"
+email = "psingal@berkeley.edu"
+github_name = "psingal001"
+status = "enrolled"
