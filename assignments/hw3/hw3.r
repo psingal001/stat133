@@ -12,10 +12,10 @@
 # First of all you need to install the ggplot2 package.
 # You only need to do that once, so the install command is commented out 
 # here to make sure you don't run it multiple times but make sure to install it once:
-# install.packages("ggplot2")
+install.packages("ggplot2")
 library("ggplot2")
 # And one more package:
-# install.packages("plyr")
+install.packages("plyr")
 library("plyr")
 
 # Before getting started you should aquaint yourself with the ggplot2 package.
@@ -68,13 +68,15 @@ load("WR1500MeterMen.rda")
 # So a time of 70 is really 4 minutes and 10 seconds.
 
 # Q1a. How many world records does this data frame contain?
-#
-# n.wr <- your code here
+
+n.wr <- nrow(wr1500m)
+n.wr
 
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
  
-# wr.name <- your code here
+wr.name <- droplevels(wr1500m$athlete[wr1500m$times == min(wr1500m$times)])
+wr.name
 
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
@@ -93,11 +95,13 @@ load("WR1500MeterMen.rda")
 # store that in a new variable and add to the data frame.
 # Hint: which geom_* function creates a step plot?
 
-# times_sec <- your code here
-# wr1500m <- your code here
+times_sec <- wr1500m$times + 180
+times_sec
+wr1500m <- data.frame(wr1500m, times_sec)
+wr1500m
 
 # Your ggplot / qplot command:
-
+ggplot
 
 # Q2b. Redo the plot using a date that incorporates the month as 
 # well as the year. For example, in Sep 1904 the world record 
@@ -287,17 +291,23 @@ load("rainfallCO.rda")
 
 # Create a variable 
 # max.rain : a vector of length 5 with the maximum rainfall at each station
+max.rain <- sapply(rain, max)
+max.rain
 
 # Create a variable 
 # mean.rain : a vector of length 5 with the average rainfall at each station
-
+mean.rain <- sapply(rain, mean)
+mean.rain
 
 # Create a variable 
 # sd.rain : a vector of length 5 with the standard deviation of the rainfall at each station
+sd.rain <- sapply(rain, sd)
+sd.rain
+
 
 # Create a variable 
 # n1989.rain : a vector of length 5 with the number of measurements at each station in the year 1989 (use [day])
-
-
+n1989.rain <- sapply(day, length)
+n1989.rain
 
 
