@@ -59,13 +59,17 @@
 
 # Q1a. How many world records does this data frame contain?
 
-n.wr <- nrow(wr1500m)
+
 
 # Q1b. Use R commands to find out who currently holds the world
 # record in the men's 1500 meter.
 
-wr.name <- droplevels(wr1500m$athlete[wr1500m$times == min(wr1500m$times)])
+n.wr <- nrow(wr1500m)
 
+# Q1b. Use R commands to find out who currently holds the world
+# record in the men's 1500 meter.
+ 
+wr.name <- droplevels(wr1500m$athlete[wr1500m$times == min(wr1500m$times)])
 
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
@@ -144,6 +148,7 @@ abline(v = wr_1944, col = "light gray", lwd = 2)
 abline(v = wr1500m$new_year[wr1500m$times == wr_1998], col = "light gray", lwd = 2)
 text(1930, 245, labels = wr1500m$athlete[wr1500m$year == 1944], cex = 5)
 text(1980, 220, labels = wr1500m$athlete[wr1500m$year == 1998], cex = 5)
+
 ## You have finised the first plot!!
 
 ################################
@@ -269,7 +274,6 @@ brewer.pal(8, "YlOrRd")
 
 myGold <- "#FFEDA088"
 
-#world <- your code here
 symbols(world$longitude, world$latitude, circles = world$Total, 
         xlim = c(-180,180), ylim = c(-90,90), add=T, inches = .45, col = myGold)
 
@@ -371,6 +375,7 @@ barplot(table(athletes$Sex, athletes$Sport)[,orderSport], beside = T)
 # Lastly, add a title to the plot.
 
 barplot(table(athletes$Sex, athletes$Sport)[,orderSport], beside = T, las = 3, cex.names = .45, main = "Olympic Sport Participation by Gender")
+
 # This was the final version of the 4th plot.
 
 # You are DONE.
