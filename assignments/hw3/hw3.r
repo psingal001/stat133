@@ -146,14 +146,14 @@ q <- q + geom_hline(aes(yintercept = (wr1500m$times_sec[wr1500m$new_year == wr_1
 wr_1944 <- wr1500m$new_year[wr1500m$year == 1944]
 wr_1944
 
-athlete_1944 = droplevels(wr1500m$athlete[wr1500m$new_year == wr_1944])
-athlete_1998 = droplevels(wr1500m$athlete[wr1500m$new_year == wr_1998])
+athlete_1944 = as.character(droplevels(wr1500m$athlete[wr1500m$new_year == wr_1944]))
+athlete_1998 = as.character(droplevels(wr1500m$athlete[wr1500m$new_year == wr_1998]))
 
 # Your ggplot command
 q <- q + geom_vline(aes(xintercept = wr_1944), colour = "Green") + 
   geom_vline(aes(xintercept = wr_1998), colour = "Green") + 
-  annotate("text", x = 1965, y = 240, label = athlete_1944) + 
-  annotate("text", x = 1965, y = 230, label = athlete_1998)
+  annotate("text", x = 1955, y = 240, label = athlete_1944) + 
+  annotate("text", x = 1984, y = 230, label = athlete_1998)
 q
 
 # Q5. Now we are ready to add other contextual information.
@@ -210,7 +210,7 @@ SO2012Ctry <- data.frame(SO2012Ctry, GDP_per_person)
 log(SO2012Ctry$pop),log(SO2012Ctry$GDP_per_person), circle = SO2012Ctry$Total
 
 # Your ggplot command
-gdp_plot <- ggplot(SO2012Ctry, aes(GDP_per_person, pop)) + geom_point() + 
+gdp_plot <- ggplot(SO2012Ctry, aes(GDP_per_person, pop)) + geom_point(aes(size = SO2012Ctry$Total)) + 
   scale_x_log10() + scale_y_log10()
 gdp_plot
 
@@ -223,6 +223,10 @@ gdp_plot
 # Hint: use annotate(), geom_text(), maybe other functions.
 
 # Your ggplot command:
+gdp_plot <- gdp_plot + labs(title = "Medals Won Relative to Population and GDP per Capita",
+                            x = "log of Population", y = "log of GDP per Capita")
+gdp_plot
+
 
 ######################################
 # PLOT 3.
@@ -234,7 +238,8 @@ library("maps")
 # Hint: look at map_data() and geom_polygon() in the ggplot2 manual.
 
 # Your ggplot commands:
-
+world_map <- map_data(map = "world")
+ggplot(world_map) + geom_polygon(aes(country), colour = "light grey")
 
 # Q11. Now add circles to the map where
 # the circles are proportional in area to the number of medals
@@ -244,7 +249,7 @@ library("maps")
 # Consider using the colors "grey40" and "grey90" for the map and "gold" for the circles.
 # Hint: look at the function [geom_point()] and the parameters [aes] and [size]
 
-# wonMedal <- your code here
+wonMedal <- SO2012Ctry$Country[SO2012Ctry$Total > 0]
 
 # Your ggplot commands here.
 
@@ -278,7 +283,8 @@ load("London2012ALL_ATHLETES.rda")
 # find the option that allows you to put bars side-by-side (study the manual page)
 
 # make barplot with ggplot
-
+bar_chart <- ggplot(athletes, aes(Sport, fill = Sex)) + geom_bar(position = "dodge")
+bar_chart
 
 ## Skip this question...
 #Q15. Remake the barplot above...
@@ -292,7 +298,9 @@ load("London2012ALL_ATHLETES.rda")
 # Lastly, add a title to the plot.
 
 # Your ggplot commands
-
+bar_chart <- bar_chart + coord_flip() + 
+  labs(title = "Olympic Sport Participation by Gender")
+bar_chart
 
 # This was the final version of the 4th plot.
 
