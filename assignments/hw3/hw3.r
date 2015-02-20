@@ -239,9 +239,8 @@ library("maps")
 
 # Your ggplot commands:
 world_map <- map_data(map = "world")
-world_graph <- ggplot(data = world_map, aes(long, lat, group = group)) + 
-  geom_polygon(fill = "light grey")
-world_graph
+ggplot() + 
+  geom_polygon(data = world_map, aes(long, lat, group = group), fill = "light grey")
 
 # Q11. Now add circles to the map where
 # the circles are proportional in area to the number of medals
@@ -255,8 +254,8 @@ wonMedal <- subset(SO2012Ctry, SO2012Ctry$Total > 0)
 wonMedal
 
 # Your ggplot commands here.
-ggplot(data = world_map, aes(long, lat, group = group)) + 
-  geom_polygon(fill = "grey40", colour = "grey90") + 
+ggplot() + geom_polygon(data = world_map, aes(long, lat, group = group), 
+                        fill = "grey40", colour = "grey90") + 
   geom_point(data = wonMedal, aes(longitude, latitude, size = sqrt(Total)),
              colour = "gold")
 
