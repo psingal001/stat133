@@ -101,7 +101,7 @@ wr1500m <- data.frame(wr1500m, times_sec)
 wr1500m
 
 # Your ggplot / qplot command:
-ggplot
+ggplot(wr1500m, aes(year, times_sec)) + geom_point()
 
 # Q2b. Redo the plot using a date that incorporates the month as 
 # well as the year. For example, in Sep 1904 the world record 
@@ -111,11 +111,12 @@ ggplot
 # first find and set all missing months to 0.5
 # Add new_year to the dataframe.
 
-# new_year <- your code here
-# wr1500m <- your code here
+wr1500m$month[is.na(wr1500m$month)] <- 6
+new_year <- wr1500m$year + (wr1500m$month / 12)
+wr1500m <- data.frame(wr1500m, new_year)
 
 # Your qplot command:
-
+q <- ggplot(wr1500m, aes(new_year, times_sec)) + geom_point()
 
 # Q3. The current world record was set in 1998. If we want to
 # show that this record still stands in 2015, we could add a 
@@ -124,9 +125,11 @@ ggplot
 # Hint: which geom_* function adds a line segment?
 # Hint: look at xlim() and theme().
 
-# wr_1998 <- your code here
+wr_1998 <- wr1500m$new_year[wr1500m$year == 1998]
+wr_1998
 
 # Your ggplot command:
+q <- q + geom_hline(aes(yintercept = (wr1500m$times_sec[wr1500m$new_year == wr_1998])))
 
 # Q4. There are two times where the record stood for several
 # years - in 1944 and 1998. Let's make it easier to see these
@@ -140,10 +143,18 @@ ggplot
 # Hint: geom_vline(), annotate().
 
 
-# wr_1944 <- your code here
+wr_1944 <- wr1500m$new_year[wr1500m$year == 1944]
+wr_1944
+
+athlete_1944 = droplevels(wr1500m$athlete[wr1500m$new_year == wr_1944])
+athlete_1998 = droplevels(wr1500m$athlete[wr1500m$new_year == wr_1998])
 
 # Your ggplot command
-
+q <- q + geom_vline(aes(xintercept = wr_1944), colour = "Green") + 
+  geom_vline(aes(xintercept = wr_1998), colour = "Green") + 
+  annotate("text", x = 1965, y = 240, label = athlete_1944) + 
+  annotate("text", x = 1965, y = 230, label = athlete_1998)
+q
 
 # Q5. Now we are ready to add other contextual information.
 # Remake the plot as before but now adding axis labels and a title.
@@ -151,7 +162,8 @@ ggplot
 # Hint : labs()
 
 # Your ggplot commands
-
+q <- q + labs(title = "Men's 1500m World Record Times", x = "Year", y = "Time in Seconds")
+q
 
 ################################
 # PLOT 2
@@ -183,7 +195,8 @@ load("SummerOlympics2012Ctry.rda")
 # the number of medals. 
 
 # To begin, make a plot of GDP against population. Your ggplot command:
-
+gdp_plot <- ggplot(SO2012Ctry, aes(GDP, pop)) + geom_point()
+gdp_plot
 
 #Q7. Let's examine GDP per person (create this new variable yourself)
 # and population.
@@ -192,12 +205,14 @@ load("SummerOlympics2012Ctry.rda")
 # Do not log the variables directly.
 # Hint: use the options log and size.
 
-# GDP_per_person <- your code here
-# SO2012Ctry <- your code here
-# symbols( your code here )
+GDP_per_person <- SO2012Ctry$GDP / SO2012Ctry$pop
+SO2012Ctry <- data.frame(SO2012Ctry, GDP_per_person)
+log(SO2012Ctry$pop),log(SO2012Ctry$GDP_per_person), circle = SO2012Ctry$Total
 
 # Your ggplot command
-
+gdp_plot <- ggplot(SO2012Ctry, aes(GDP_per_person, pop)) + geom_point() + 
+  scale_x_log10() + scale_y_log10()
+gdp_plot
 
 # We skip Q8 this time the plot above is already fine.
 # Q8. It appears that the countries with no medals are circles too....
