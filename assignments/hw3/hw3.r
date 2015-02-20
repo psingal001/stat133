@@ -239,19 +239,26 @@ library("maps")
 
 # Your ggplot commands:
 world_map <- map_data(map = "world")
-ggplot(world_map) + geom_polygon(aes(country), colour = "light grey")
+world_graph <- ggplot(data = world_map, aes(long, lat, group = group)) + 
+  geom_polygon(fill = "light grey")
+world_graph
 
 # Q11. Now add circles to the map where
 # the circles are proportional in area to the number of medals
 # won by the country. 
 # pull out the contries that won at least one medal (you will need at least
-# the contries longitude, latitude and Total.)
+# the countries longitude, latitude and Total.)
 # Consider using the colors "grey40" and "grey90" for the map and "gold" for the circles.
 # Hint: look at the function [geom_point()] and the parameters [aes] and [size]
 
-wonMedal <- SO2012Ctry$Country[SO2012Ctry$Total > 0]
+wonMedal <- subset(SO2012Ctry, SO2012Ctry$Total > 0)
+wonMedal
 
 # Your ggplot commands here.
+ggplot(data = world_map, aes(long, lat, group = group)) + 
+  geom_polygon(fill = "grey40", colour = "grey90") + 
+  geom_point(data = wonMedal, aes(longitude, latitude, size = sqrt(Total)),
+             colour = "gold")
 
 ## Not needed
 #Q12. Remake the plot and fill ......
