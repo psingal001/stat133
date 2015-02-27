@@ -99,23 +99,33 @@ recipeConversion <- function(recipe){
   }
   nrow_recipe <- nrow(recipe)
   ncol_recipe <- ncol(recipe)
+  recipe.metric <- recipe
   for (i in 1:nrow_recipe){
     if (recipe[i,2] %in% c("cup", "cups")){
-      recipe[i,1] <- recipe[i,1] * 236.6
-      recipe[i,2] <- "ml"
+      recipe.metric[i,1] <- round_by5(recipe[i,1] * 236.6)
+      recipe.metric[i,2] <- "ml"
     } else {
       if (recipe[i,2] == "oz"){
-        recipe[i,1] <- recipe[i,1] * 28.3
-        recipe[i,2] <- "gr"
+        recipe.metric[i,1] <- round_by5(recipe[i,1] * 28.3)
+        recipe.metric[i,2] <- "gr"
         }
       }
     
   }
-  
-  
-  
   return recipe.metric
 }
+
+round_by5 <- function(x){
+  if (x%%5 < 2.5){
+    y <- (x%/%5)*5
+  } else {
+    y <- ((x%/%5) + 1)*5
+  }
+  return (y)
+}
+# round_by5 is a function that takes in a value 'x' and returns a value that is rounded up or down
+#   to the nearest integer that is a multiple of 5
+# Example: 32 would be rounded down to 30; 32.6 would round up to 33
 
 sample_1 <- data.frame(amount = c(3, 4), unit = c("cups", "oz"), ingredient = c("flour", "milk"))
 recipeConversion(sample_1)
