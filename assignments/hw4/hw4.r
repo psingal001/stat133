@@ -24,19 +24,7 @@ listLengths <- function(data.list) {
     }
   return(element.lengths)
 }
-#first compute length of list, n
-#create a loop that iterates from 1 to n
-#inside loop, compute length of the sub-list, set as a variable
-#insert variable into a list variable
-#return list
 
-x <- list(c(1:4), c(3, 4), c(2:7))
-class(x)
-length(x)
-x[1]
-y <- list()
-length(y)
-y[1]
 
 #### Function 2
 #### Implement the function "powers"
@@ -60,10 +48,6 @@ powers <- function(x, k){
   return(x.powers)
 }
 
-x <- c(1:4)
-x
-y <- x**2
-y[3]
 
 #### Function #3
 #### Implement the function "recipeConversion"
@@ -114,7 +98,6 @@ recipeConversion <- function(recipe){
   }
   return (recipe.metric)
 }
-?levels
 
 round_by5 <- function(x){
   if (x%%5 < 2.5){
@@ -128,10 +111,6 @@ round_by5 <- function(x){
 #   to the nearest integer that is a multiple of 5
 # Example: 32 would be rounded down to 30; 32.6 would round up to 33
 
-sample_1 <- data.frame(amount = c(3, 4), unit = c("cups", "oz"), ingredient = c("flour", "milk"))
-recipeConversion(sample_1)
-sample_2 <- data.frame(total = c(3, 4), unit = c("cups", "oz"), ingredients = c("flour", "milk"))
-recipeConversion(sample_2)
 
 #### Function #4a
 # Implement the function "bootstrapVarEst"
@@ -167,11 +146,6 @@ bootstrapVarEst <- function(x, B){
 }
 
 
-#use for loop but not using i
-#when that is the case, you use the replicate function
-#replicate(n, function), where this replicates a function n times
-
-
 #### Function #4b
 #### Implement the function "jackknifeVarEst"
 
@@ -202,8 +176,6 @@ jackknifeVarEst <- function(x){
   jack.sigma2.est <- var(mu_i)
   return (jack.sigma2.est)
 }
-
-# use a for loop and in loop you remove ith value x[-i]
 
 
 #### Function #4c
