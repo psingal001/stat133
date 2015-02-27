@@ -112,8 +112,9 @@ recipeConversion <- function(recipe){
       }
     
   }
-  return recipe.metric
+  return (recipe.metric)
 }
+?levels
 
 round_by5 <- function(x){
   if (x%%5 < 2.5){
@@ -131,7 +132,6 @@ sample_1 <- data.frame(amount = c(3, 4), unit = c("cups", "oz"), ingredient = c(
 recipeConversion(sample_1)
 sample_2 <- data.frame(total = c(3, 4), unit = c("cups", "oz"), ingredients = c("flour", "milk"))
 recipeConversion(sample_2)
-
 
 #### Function #4a
 # Implement the function "bootstrapVarEst"
