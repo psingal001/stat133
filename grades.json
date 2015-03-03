@@ -1,0 +1,23 @@
+{
+    "login": "psingal001", 
+    "url": "git@github.com:psingal001/stat133.git", 
+    "name": "Pranay Singal", 
+    "email": "psingal@berkeley.edu", 
+    "github_name": "psingal001", 
+    "status": "enrolled", 
+    "grades": {
+        "hw1": {
+            "note": "", 
+            "hash": "4852cbdd60e6c01113b97eebbde44a22231a8117", 
+            "earned": 0, 
+            "possible": 20, 
+            "penalty": 0, 
+            "parts": {
+                "hw1": {
+                    "possible": 20, 
+                    "earned": 0
+                }
+            }
+        }
+    }
+}
