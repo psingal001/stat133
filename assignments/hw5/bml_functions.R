@@ -8,10 +8,19 @@
 ## that stores the state of the system (i.e. location of red and blue cars)
 
 bml.init <- function(r, c, p){
-
+  ncars <- r*c*p
   
-   #return(m)
+  
+  
+  return(m)
 }
+
+# Steps to take
+# Figure out the number of cars in system - multiply density and matrix dimensions
+# Determine the number of blue and red - 
+# 
+# Create a matrix 
+
 
 #### Function to move the system one step (east and north)
 ## Input : a matrix [m] of the same type as the output from bml.init()
@@ -24,7 +33,7 @@ bml.init <- function(r, c, p){
 bml.step <- function(m){
 
   
-   #return(list(m, grid.new))
+  return(list(m, grid.new))
 }
 
 #### Function to do a simulation for a given set of input parameters
