@@ -1,0 +1,45 @@
+1. For what values of p, the density of the grid, did you find free flowing traffic and traffic 
+jams? Did you find any cases of a mixture of jams and free flowing traffic?
+
+I found that for values of p ranging from 0 to .45 the system was free flowing. For values of p
+above .55, the system experienced traffic jams. For values between .45 and .55, there were a
+mixture of jams and free flowing traffic.
+
+
+2. How many simulation steps did you need to run before observing this behavior?
+I had to run about 20 to 30 simulation steps at num_steps to be a maximum of 1000 to observe this
+behavior before I realized this pattern. For the mixture of jams and free flowing traffic, there 
+were some observations that stopped after the 1000 limit I had set and others that stopped before
+that value. Therefore, I set the limit to 5000 in order to understand and the limit was still
+reached for some.
+
+
+3. Does this transition depend on the size or shape of the grid?
+This transition is dependent on the size and shape of the grid. Looking at a 40 by 10 matrix with p
+equal to .5, I found that this type of state is constantly flowing. In the 10 tests I ran, none of
+them had any steps lower than 10,000. This was the same case for a 10 by 40 matrix. 
+
+
+Explanation of graphs
+Graph 1 and 2:
+These two graphs describe a 50 by 50 with density of 60%, showing the beginning state of the matrix
+and the end state of the matrix.
+
+Graph 3:
+I wanted to analyze the pattern between the density of the system and the number of steps it took 
+to reach grid lock. I did this by taking a sample of 20 tests and averaging the mean of the
+num_steps. I would like to make a note that for the value .5, there is a slight error in the
+numerical value as there were 4 "free flowing" states (the maximum number of iterations the system
+could take was 1000 so I assumed the state is free flowing at this point). If 1 free flowing state
+exists, the mean of the set should be infinite as 1 value is infinite.
+Nevertheless, there is a certain pattern, where as the density increases, it takes less number of
+steps to reach a traffic jam.
+
+Graph 4:
+I wanted to see whether there was a pattern between the size of the system and the number of steps
+it took to reach grid lock. In the graph shown, there is some indication of a pattern where the
+number of steps needed increased as the system size increased. However, in various other tests, I
+noticed that there actually was no pattern between the size and the number of steps. For a 10 by 10
+matrix, the average number of steps might be around 500. For a 15 by 15 system, the average would
+decrease down to 200. For a 20 by 20 system, the number would jump back up. This fluctuating nature
+gave some indication that there is no pattern, unlike the case in Graph 3.
