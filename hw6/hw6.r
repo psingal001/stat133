@@ -92,6 +92,9 @@ test3 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .6)
 test4 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .7)
 test5 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .8)
 
+# Function num_doctors_adopt will return a vector that computes the number of doctors
+#  that adopted the drug, where the first entry corresponds to the first day, the
+#  second entry corresponds to the second day, and on and on
 num_doctors_adopt <- function(sample_matrix){
   doctors_adopt <- c()
   for (i in 1:ncol(sample_matrix)){
