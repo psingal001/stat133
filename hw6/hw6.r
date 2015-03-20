@@ -114,7 +114,11 @@ test3_num_adopt <- num_doctors_adopt(test3)
 test4_num_adopt <- num_doctors_adopt(test4)
 test5_num_adopt <- num_doctors_adopt(test5)
 
-num_doctors <- 30
-plot(n.days, num_doctors)
-lines(n.days, test1_num_adopt)
+plot(test5_num_adopt, main = "Doctors who adopted based on probability of adoption", 
+     xlab = "Day", ylab = "Number of doctors who adopted", type = 'l', col = "red")
+lines(test4_num_adopt)
+lines(test3_num_adopt, col = "green")
+lines(test2_num_adopt, col = "blue")
+lines(test1_num_adopt, col = "orange")
+
 
