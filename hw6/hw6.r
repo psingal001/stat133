@@ -38,7 +38,34 @@ sim.doctors <- function(initial.doctors, n.doctors, n.days, p){
   # 3) convert the non-adopter with probability p
 
   # return the output
-
+  has_adopted <- matrix(nrow = n.doctors, ncol = n.days)
+  has_adopted[, 1] <- initial.doctors
+  
+  for (i in 1:n.days){
+    random_doctors <- sample(n.days, 2)
+    ran_doc1 <- random_doctors[1]
+    ran_doc2 <- random_doctors[2]
+    doctors_dayi <- initial.doctors
+    
+    if ((has_adopted[ran_doc1, i] == 1) & (has_adopted[ran_doc2, i] == 0)){
+      adopted <- sample(c(0, 1), 1, replace = TRUE, c(1-p,p))
+      if (adopted == 1){
+        doctors_dayi[ran_doc2] <- 1
+      }
+    }
+    else{
+      if ((has_adopted[ran_doc1, i] == 0) & (has_adopted[ran_doc2, i] == 1)){
+        adopted <- sample(c(0, 1), 1, replace = TRUE, c(1-p,p))
+        if (adopted == 1){
+          doctors_dayi[ran_doc1] <- 1
+        }
+      }
+    }
+    
+    has_adopted[,i] <- doctors_dayi
+  }
+  
+  return (has_adopted)
 }
 
 # When you test your function you have to generate <initial.doctors> and
