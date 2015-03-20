@@ -41,28 +41,31 @@ sim.doctors <- function(initial.doctors, n.doctors, n.days, p){
   has_adopted <- matrix(nrow = n.doctors, ncol = n.days)
   has_adopted[, 1] <- initial.doctors
   
-  for (i in 1:n.days){
-    random_doctors <- sample(n.days, 2)
+  for (i in 1:(n.days-1)){
+    random_doctors <- sample(n.doctors, 2)
     ran_doc1 <- random_doctors[1]
     ran_doc2 <- random_doctors[2]
-    doctors_dayi <- initial.doctors
-    
-    if ((has_adopted[ran_doc1, i] == 1) & (has_adopted[ran_doc2, i] == 0)){
+    doctors_dayi <- has_adopted[,i]
+    if (has_adopted[ran_doc1, i] == 1){
+      if (has_adopted[ran_doc2, i] == 0){
       adopted <- sample(c(0, 1), 1, replace = TRUE, c(1-p,p))
-      if (adopted == 1){
-        doctors_dayi[ran_doc2] <- 1
+        if (adopted == 1){
+          doctors_dayi[ran_doc2] <- 1
+        }
       }
     }
     else{
-      if ((has_adopted[ran_doc1, i] == 0) & (has_adopted[ran_doc2, i] == 1)){
-        adopted <- sample(c(0, 1), 1, replace = TRUE, c(1-p,p))
-        if (adopted == 1){
-          doctors_dayi[ran_doc1] <- 1
+      if (has_adopted[ran_doc2, i] == 1){
+        if (has_adopted[ran_doc1, i] == 0){
+          adopted <- sample(c(0, 1), 1, replace = TRUE, c(1-p,p))
+          if (adopted == 1){
+            doctors_dayi[ran_doc1] <- 1
+          }
         }
       }
     }
     
-    has_adopted[,i] <- doctors_dayi
+    has_adopted[,i+1] <- doctors_dayi
   }
   
   return (has_adopted)
@@ -77,4 +80,41 @@ set.seed(42)
 # on x-axis: days,
 # on y-axis : the number of doctors that have already adopted the drug, on that day
 # Put all 5 lines in one figure (e.g. use first plot() then lines() for the subsequent lines)
+
+nonbel.doctors <- rep(0, times = 90)
+bel.doctors <- rep(1, times = 10)
+initial.doctors <- sample(c(nonbel.doctors, bel.doctors), 100)
+
+n.days <- 50
+test1 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .4)
+test2 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .5)
+test3 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .6)
+test4 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .7)
+test5 <- sim.doctors(initial.doctors, length(initial.doctors), n.days, .8)
+
+num_doctors_adopt <- function(sample_matrix){
+  doctors_adopt <- c()
+  for (i in 1:ncol(sample_matrix)){
+    doctors_adopt_day <- 0
+    for (j in 1:nrow(sample_matrix)){
+      if (sample_matrix[j, i] == 1){
+        doctors_adopt_day <- doctors_adopt_day + 1
+      }
+    }
+    
+    doctors_adopt <- append(doctors_adopt, doctors_adopt_day)
+  }
+  
+  return(doctors_adopt)
+}
+
+test1_num_adopt <- num_doctors_adopt(test1)
+test2_num_adopt <- num_doctors_adopt(test2)
+test3_num_adopt <- num_doctors_adopt(test3)
+test4_num_adopt <- num_doctors_adopt(test4)
+test5_num_adopt <- num_doctors_adopt(test5)
+
+num_doctors <- 30
+plot(n.days, num_doctors)
+lines(n.days, test1_num_adopt)
 
