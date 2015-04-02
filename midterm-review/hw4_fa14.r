@@ -19,7 +19,11 @@ truncate <- function(input.vector, trim) {
 
     stopifnot(0<=trim & trim<=0.5)
     # your code here
-
+    quantilecutoff <- quantile(input.vector, c(trim, 1-trim))
+    truncated.vector <- input.vector[input.vector >= min(quantilecutoff) &
+                                       input.vector <= max(quantilecutoff)]
+    
+    return (truncated.vector)
 }
 
 tryCatch(checkEquals(4:7, truncate(1:10, trim=0.25)), error=function(err)
@@ -45,10 +49,17 @@ tryCatch(checkIdentical(integer(0), truncate(1:10, trim=0.5)),
 # second the upper bound
 
 outlierCutoff <- function(data) {
-
-    #your code here
-
-    return(outlier.cutoffs)
+  
+  #your code here
+  outlier.cutoffs <- sapply(data, function(var){
+    IQR.var <- IQR(var),
+    cutoff.min <- median(var) - 1.5 * IQR.var
+    cutoff.max <- median(var) + 1.5 * IQR.var
+    return (cutoff.min, cutoff.max)
+  })
+  
+  
+  return(outlier.cutoffs)
 }
 
 tryCatch(checkEquals(outlier.cutoff.t, outlierCutoff(ex1.test),
