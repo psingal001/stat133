@@ -13,9 +13,13 @@ load('hw5-tests.rda')
 #   element of <data.list>
 
 listLengths <- function(data.list) {
-
-    # your code here
-
+  
+  # your code here
+  element.lengths <- c()
+  for (i in 1:length(data.list)){
+    element.lengths <- append(element.lengths, length(data.list[[i]]))
+  }
+  return (element.lengths)
 }
 
 tryCatch(checkEquals(list.lengths.t, listLengths(ex3.test2)),

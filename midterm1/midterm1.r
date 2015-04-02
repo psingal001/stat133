@@ -51,9 +51,18 @@ subset.nonsmoke.age <- subset.nonsmoke$age
 # whose value in <ages> is strictly less that <age.cutoff>.
 
 gestByAge <- function(age.cutoff, ages, gestation){
-
-    # your code here
-
+  
+  # your code here
+  
+  gestation.vals <- c()
+  for (i in length(age)){
+    if (age[i] < age.cutoff){
+      gestation.vals <- append(gestation.vals, gestation[i])
+    }
+    
+  }
+  avg.gestation <- mean()
+  return (avg.gestation)
 }
 
 
@@ -62,4 +71,5 @@ gestByAge <- function(age.cutoff, ages, gestation){
 # 1) the title: "Birthweight v gestation"
 # 2) points of mothers whose smoking status is never should be colored red
 
-
+plot(infants$gestation, infants$bwt, type = "p", main = "Birthweight v gestation", 
+     col = ifelse(infants$smoke == "Never", "red", "black"))
