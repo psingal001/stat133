@@ -41,7 +41,7 @@ set.seed(71)
 l <- list(rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5), 
           rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5), 
           rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5))
-test3 <- replicate(n = 12, expr = rpois(100, 5), simplify = "list")
+test <- replicate(n = 12, expr = rpois(100, 5), simplify = "list")
 
 # for the next two tasks you will use the data frame infants (size 1236x15)
 # LEAVE AS IS:
