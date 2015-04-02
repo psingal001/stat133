@@ -1,14 +1,14 @@
 # Please load in the Kaiser babies dataset included in your midterm1
 # directory. This dataset includes information on mothers and the children born
 # to those mothers. You will need this data to perform the tasks for this quiz.
-
+load("C:/Users/Pranay/src/stat133/midterm1/KaiserBabies.rda")
 
 # calculate the mean and standard deviation of birthweights (bwt) for all
 # observations in the dataset. Store these as the variables <mean.bwt> and
 # <sd.bwt> respectively.
 
-# mean.bwt <- your code here
-# sd.bwt <- your code here
+mean.bwt <- mean(infants$bwt)
+sd.bwt <- sd(infants$bwt)
 
 
 
@@ -17,7 +17,7 @@
 # this should be a numeric vector whose length is equal to the number of
 # observations in the dataset.
 
-# std.bwts <- your code here
+std.bwts <- (infants$bwt - mean.bwt) / sd.bwt
 
 
 
@@ -26,16 +26,16 @@
 # 1) Mothers whose smoking status is never: <subset.nonsmoke>
 # 2) Mothers whose smoking status is now: <subset.smoke>
 
-# subset.nonsmoke <- your code here
-# subset.smoke <- your code here
+subset.nonsmoke <- infants[infants$smoke == "Never",]
+subset.smoke <- infants[infants$smoke == "Now",]
 
 
 
 # For each of your subsets, create a vector giving the age of the mother. Store
 # these as variables <subset.nonsmoke.age> and <subset.smoke.age>.
 
-# subset.smoke.age <- your code here
-# subset.nonsmoke.age <- your code here
+subset.smoke.age <- subset.smoke$age
+subset.nonsmoke.age <- subset.nonsmoke$age
 
 
 
