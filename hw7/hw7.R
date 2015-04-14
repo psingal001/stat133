@@ -19,6 +19,7 @@
 ## Please install it on your computer, using: install.packages("SnowballC")
 ## but do NOT include that install statement in this file.
 ## Load the library:
+install.packages("SnowballC")
 library("SnowballC")
 
 ## STOP : Have you done : Session > Set Working Directory > To Source File Location ?
@@ -48,7 +49,7 @@ speeches <- readLines(con=file("stateoftheunion1790-2012.txt"))
 # Question: Does every single *** in the file indicate the beginning of a speech?
 
 breaks <- <your code here>
-n.speeches <- <your code here>
+n.speeches <- breaks + 1
 
 # Hint : look at the file and/or your object speeches, where,
 # each speech has the same format, whererelative to breaks 
