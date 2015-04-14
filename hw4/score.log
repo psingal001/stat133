@@ -17,9 +17,9 @@ INFO:root:(3 points) R('all.equal(bootstrapVarEst.r, sol$bootstrapVarEst, check.
 INFO:root:Executed R('jackknifeVarEst.r <- jackknifeVarEst(test$jackknifeVarEst.x)')
 ERROR:root:(3 points) Checking R('all.equal(jackknifeVarEst.r, sol$jackknifeVarEst, check.attributes=F, tolerance=1e-1)')[0]
 ERROR:root:... Expecting: True
-ERROR:root:... But got:   Mean relative difference: 0.9989648
+ERROR:root:... But got:   Mean relative difference: 0.9990355
 INFO:root:Executed R('samplingVarEst.r <- samplingVarEst(test$samplingVarEst.x, test$samplingVarEst.type)')
 ERROR:root:(3 points) Checking R('all.equal(samplingVarEst.r, sol$samplingVarEst, check.attributes=F, tolerance=1e-1)')[0]
 ERROR:root:... Expecting: True
-ERROR:root:... But got:   Mean relative difference: 0.9990623
+ERROR:root:... But got:   Mean relative difference: 0.9990277
 INFO:root:You got a 10 out of 20.
