@@ -48,13 +48,13 @@ speeches <- readLines(con=file("stateoftheunion1790-2012.txt"))
 # Create the variable [n.speeches] a numeric variable with the number of speeches
 # Question: Does every single *** in the file indicate the beginning of a speech?
 
-breaks <- <your code here>
-n.speeches <- breaks + 1
+breaks <- grep("***", speeches, fixed = TRUE)
+n.speeches <- length(breaks) - 1
 
 # Hint : look at the file and/or your object speeches, where,
 # each speech has the same format, whererelative to breaks 
 # are the items we pull out next (the names, dates, etc).
-    
+
 # Use the vector [breaks] and [speeches] to create a 
 # character vector [presidents]
 # with the name of the president delivering the address
