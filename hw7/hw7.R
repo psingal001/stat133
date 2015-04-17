@@ -302,7 +302,7 @@ plot(mds, col=unique(data.frame(speechesDF$Pres,speechesDF$party))$speechesDF.pa
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
 presParty <- unique(speechesDF$Pres)
-
+ 
 
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
