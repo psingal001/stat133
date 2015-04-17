@@ -273,7 +273,7 @@ docFreq <- apply(presidentWordMat, MARGIN = 1, function(x) {
   sum(sapply(x, function(y){y>0}))
 }
 )
-    
+
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
 # and save the return value in the matrix [presDist]
@@ -301,7 +301,8 @@ plot(mds, col=unique(data.frame(speechesDF$Pres,speechesDF$party))$speechesDF.pa
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presParty <- c("unique(speechesDF$Pres)" = speechesDF$party)
+presParty <- unique(speechesDF$Pres)
+
 
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
