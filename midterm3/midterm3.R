@@ -9,7 +9,11 @@
 #   <num.dot>: an integer indicating how many elements of <chvec> contain the "."
 #     symbol. For example: numDotElements(c('USA', 'U.S.A', '...')) should return 2
 
-
+numDotElements <- function(chvec){
+  num.vec <- grep(".", chvec, fixed = TRUE)
+  num.dot <- length(num.vec)
+  return(num.dot)
+}
 
 
 # Write a function called sumDigits that compute the sum of all the digits in
@@ -20,7 +24,12 @@
 # and return the following
 #   <total>: A single number (the sum of all the digits in chvec)
 
-
+sumDigits <- function(chvec){
+  digit.vec <- gsub("[^[:digit:]]", "", chvec)
+  digit.vec <- unlist(strsplit(digit.vec, ""))
+  total <- sum(as.numeric(digit.vec))
+  return(total)
+}
 
 # Some test cases:
 all.equal(sumDigits("1z3p ! 21"), 7)
@@ -37,6 +46,13 @@ all.equal(sumDigits("abcdefg"), 0)
 #
 # and return
 #   <herchvec>: The same character vector with the required substitutions.
+
+hisToHers <- function(chvec){
+  herchvec <- gsub(" he ", " she ", chvec)
+  herchvec <- gsub(" his ", " her ", chvec)
+  herchvec <- gsub(" him ", " her ", chvec)
+  return(herchvec)
+}
 
 
 # A test case
@@ -59,3 +75,10 @@ all.equal(
 # For example mostCommonLetter("aabbccccdddd") should return 
 # [1] "c" "d"
 
+mostCommonLetter <- function(chvec){
+  new.chvec <- gsub("[^[:alpha:]]", "", chvec)
+  new.chvec <- tolower(new.chvec)
+  letter.vec <- sort(unlist(strsplit(new.chvec, "")))
+  letter <- unique(letter.vec[table(letter.vec) == max(table(letter.vec))])
+  return(letter)
+}
