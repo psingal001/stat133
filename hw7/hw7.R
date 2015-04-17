@@ -59,7 +59,7 @@ n.speeches <- length(breaks) - 1
 # character vector [presidents]
 # with the name of the president delivering the address
 
-presidents <- <your code here>
+presidents <- speeches[breaks+3][-length(breaks)]
 
 # Use [speeches] and the vector [breaks] to create [tempDates], 
 # a character vector with the dates of each speech
@@ -69,10 +69,11 @@ presidents <- <your code here>
 # Note: you may need to use two lines of code to create one/both variables.
 # and apply may come in handy.
     
-tempDates <- <your code here>
-  
-speechYr <- <your code here>
-speechMo <- <your code here>
+tempDates <- speeches[breaks+4][-length(breaks)]
+
+yrLocs <- gregexpr("[[:digit:]][[:digit:]][[:digit:]]+" , tempDates)
+speechYr <- as.numeric(substr(tempDates,unlist(yrLocs),unlist(yrLocs)+3))
+speechMo <- gsub( "[[:digit:] ,]","" , tempDates)
 
 # Create a list variable [speechesL] which has the full text of each speech.
 # The variable [speechesL] should have one element for each speech.
@@ -80,7 +81,7 @@ speechMo <- <your code here>
 # element in the vector is a character string corresponding to one sentence.
 
 # You already have "breaks" to help index where each speech starts and stops.
-    
+
 # Note: The line breaks in the text file do not correspond to sentences so you have to
 # -- pull out the text of one speech
 # -- collapse all the lines of a speech into one long character string (use paste())
@@ -102,8 +103,9 @@ speeches <- gsub("U.S.", "US", speeches)
 
 speechesL <- list()
 for(i in 1:n.speeches){
-  <your code here>
+  speechesL[[i]] <- paste(speeches[(breaks[i]+6):(breaks[i+1]-2)],collapse = " ")
 }
+speechesL <- lapply(speechesL, strsplit, split = "[\\.\\?\\!] ")
 
 #### Word Vectors 
 # For each speech we are going to collect the following information:
@@ -139,49 +141,52 @@ for(i in 1:n.speeches){
 #> wordStem(c("national", "nationalistic", "nation"))
 #[1] "nation"      "nationalist" "nation"     
 
-speechToWords = function(sentences) {
+speechToWords <- function(sentences) {
 # Input  : sentences, a character string
 # Output : words, a character vector where each element is one word 
 
   # Eliminate apostrophes and numbers, 
   # and turn characters to lower case.
-  # <your code here>
-    
-  # Drop the words (Applause. and Laughter.)
-  # <your code here>
+  sentences <- gsub("[,'[:digit:]]","",sentences)
+  sentences <- tolower(sentences)
 
+  # Drop the words (Applause. and Laughter.)
+  sentences <- gsub("\\[Applause\\]", "", sentences)
+  sentences <- gsub("\\[Laughter\\]", "", sentences)
+  sentences <- gsub("\\\n","",sentences)
+  
   
   # Split the text up by blanks and punctuation  (hint: strsplit, unlist)
-  # <your code here>
+  sentences <- unlist(strsplit(sentences, "[ [:punct:]]"))
   
   # Drop any empty words 
-  # <your code here>
+  sentences <- sentences[-which(sentences == "")]
   
   # Use wordStem() to stem the words
   # check the output from wordStem(), do you get all valid words?  any empty ("") strings?
-  # <your code here>
+  sentences <- wordStem(sentences)
   
   # return a character vector of all words in the speech
-
+  return(sentences)
 }
 
 
 #### Apply the function speechToWords() to each speach
 # Create a list, [speechWords], where each element of the list is a vector
 # with the words from that speech.
-speechWords <- <your code here>
+speechWords <- lapply(speechesL, speechToWords)
 
 # Unlist the variable speechWords (use unlist()) to get a list of all words in all speeches,
 # then create:
 # [uniqueWords] : a vector with every word that appears in the speeches in alphabetic order
 
-uniqueWords <- <your code here>
+uniqueWords <- sort(unique(unlist(speechWords)))
 
 # I get 12965 unique words when I run my code - if you don't try to check that all preceeding
 # steps were ok.  Keep the line below in the code, if you get a different number of
 # unique words and can't figure out why, just continue with the project.
 no.uniqueWords <- length(uniqueWords)
-    
+
 # Create a matrix [wordCount]
 # the number of rows should be the same as the length of [uniqueWords]
 # the number of columns should be the same as the number of speeches (i.e. the length of [speechesL])
