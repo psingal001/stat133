@@ -214,15 +214,19 @@ names(emptyVec) = uniqueWords
 
 # You may want to use an apply statment to first create a list of word vectors, one for each speech.
 # Think about what you want to do for each element, maybe put that in a little function and call in an lapply statement
-# wordVecs <- <your code here>
+wordVecs <- lapply(speechWords, function(x){
+  tempVec <- emptyVec
+  tempVec[(sort(unique(unlist(x))))] <- table(x)
+  return(tempVec)
+})
 
 # Create a matrix out of wordVecs:
-# wordMat <- <your code here>
+wordMat <- matrix(unlist(wordVecs), ncol  = length(wordVecs), byrow = FALSE)
 
 # Load the dataframe [speechesDF] which has two variables,
 # president and party affiliation (make sure to keep this line in your code):
 
-  load("speeches_dataframe.Rda")
+load("speeches_dataframe.Rda")
 
 ## Now add the following variables to the  dataframe [speechesDF]:
 # yr - year of the speech (numeric) (i.e. [speechYr], created above)
@@ -232,12 +236,17 @@ names(emptyVec) = uniqueWords
 # chars - number of letters in the speech (use [speechWords] to calculate)
 # sent - number of sentences in the speech (use [speechesL] to calculate this)
 
-words <- <your code here>
-chars <- <your code here>
-sentences <- <your code here>
+yr <- speechYr
+month <- speechMo
+words <- sapply(speechWords, length)
+chars <- sapply(speechWords, function(x) {sum(nchar(x))})
+sentences <- sapply(speechesL, function(data.list) {
+  data.list <- sapply(data.list, length)
+  return(data.list)
+})
 
 # Update the data frame
-speechesDF <- <your code here>
+speechesDF <- cbind(speechesDF, yr, month, words, chars, sentences)
 
 ######################################################################
 ## Create a matrix [presidentWordMat] 
@@ -245,9 +254,9 @@ speechesDF <- <your code here>
 # and that colum is the sum of all the columns corresponding to speeches make by said president.
 
 # note that your code will be a few lines...
-  
-presidentWordMat <- <your code here> 
-  
+presidentWordMat <- t(rowsum(t(wordMat),speechesDF$Pres))
+presidentWordMat <- presidentWordMat[ ,c("George Washington","John Adams","Thomas Jefferson","James Madison","James Monroe","John Quincy Adams","Andrew Jackson","Martin van Buren","John Tyler","James Polk","Zachary Taylor","Millard Fillmore","Franklin Pierce","James Buchanan","Abraham Lincoln","Andrew Johnson","Ulysses S. Grant","Rutherford B. Hayes","Chester A. Arthur","Grover Cleveland","Benjamin Harrison","William McKinley","Theodore Roosevelt","William H. Taft","Woodrow Wilson","Warren Harding","Calvin Coolidge","Herbert Hoover","Franklin D. Roosevelt","Harry S. Truman","Dwight D. Eisenhower","John F. Kennedy","Lyndon B. Johnson","Richard Nixon","Gerald R. Ford","Jimmy Carter","Ronald Reagan","George H.W. Bush","William J. Clinton","George W. Bush","Barack Obama")]
+
 # At the beginning of this file we sourced in a file "computeSJDistance.R"
 # It has the following function:
 # computeSJDistance = (tf, df, terms, logdf = TRUE, verbose = TRUE)
@@ -255,24 +264,27 @@ presidentWordMat <- <your code here>
 # terms - a character vector of all the unique words, length numTerms (i.e. uniqueWords)
 # df - a numeric vector, length numTerms, number of docs that contains term (i.e. df)
 # tf - a matrix, with numTerms rows and numCols cols (i.e. the word matrix)
-  
+
 # Document Frequency
 # [docFreq]: vector of the same length as [uniqueWords], 
 # count the number of presidents that used the word
 
-  docFreq <- <your code here>
+docFreq <- apply(presidentWordMat, MARGIN = 1, function(x) {
+  sum(sapply(x, function(y){y>0}))
+}
+)
     
 # Call the function computeSJDistance() with the arguments
 # presidentWordMat, docFreq and uniqueWords
 # and save the return value in the matrix [presDist]
 
-presDist <- computeSJDistance( < insert arguments here >)
+presDist <- computeSJDistance(terms = uniqueWords, df = docFreq, tf = presidentWordMat)
 
-## Visuzlise the distance matrix using multidimensional scaling.
+## Visualise the distance matrix using multidimensional scaling.
 # Call the function cmdscale() with presDist as input.
 # Store the result in the variable [mds] by 
 
-mds <- <your code here>
+mds <- cmdscale(presDist)
 
 # First do a simple plot the results:
 plot(mds)
@@ -282,24 +294,27 @@ plot(mds)
 # -- color the observations by party affiliation 
 # -- using the presidents name as a plotting symbol
 
+plot(mds, col=unique(data.frame(speechesDF$Pres,speechesDF$party))$speechesDF.party, 
+     main = "Presidents", xlab = "", ylab = "")
+
 # Create a variable presParty, a vector of length 41 where each element
 # is the party affiliation and the names attribute has the names of the presidents.
 # Hint: the info is in speechesDF$party and speechesDF$Pres
 
-presParty <- <your code here>
-  
+presParty <- c("unique(speechesDF$Pres)" = speechesDF$party)
+
 # use rainbow() to pick one unique color for each party (there are 6 parties)
 
-cols <- <your code here>
+cols <- rainbow(presParty)
 
 # Now we are ready to plot again.
 # First plot mds by calling plot() with type='n' (it will create the axes but not plot the points)
 # you set the title and axes labels in the call to plot()
 # then call text() with the presidents' names as labels and the color argument
 # col = cols[presParty[rownames(presDist)]]
-  
-plot(<your code here>)
-text(<your code here>)
+
+plot(mds, type = "n", main = "Presidents", xlab = "", ylab = "")
+text(mds, labels = unique(speechesDF$Pres), col = cols[presParty[rownames(presDist)]])
 
 ### Use hierarchical clustering to produce a visualization of  the results.
 # Compare the two plots.
@@ -315,11 +330,11 @@ plot(hc)
 # x-axis: speech year, y-axis: average sentence length (word/sent)
 
 # your plot statements below:
-
-
-
-
-
+plot(speechesDF$yr, speechesDF$sentences)
+plot(speechesDF$yr, speechesDF$words)
+plot(speechesDF$yr, speechesDF$chars)
+plot(speechesDF$yr, speechesDF$char/speechesDF$words)
+plot(speechesDF$yr, speechesDF$words/speechesDF$sentences)
 
 
 
