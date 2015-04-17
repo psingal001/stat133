@@ -38,13 +38,15 @@ listLengths <- function(data.list) {
 #              the column names should be : "x", "x^2", "x^3" etc.
 
 powers <- function(x, k){
-  x.powers <- data.frame(x)
+    #x.powers <- data.frame(x)
+    x.powers <- x # Andy
   for (i in 2:k){
     column <- x**i
     x.powers <- cbind(x.powers, column)
   } 
   column_names <- paste("x^", as.character(2:k), sep = "")
   colnames(x.powers) <- c("x", column_names)
+  print(typeof(x.powers))
   return(x.powers)
 }
 
@@ -168,8 +170,8 @@ jackknifeVarEst <- function(x){
   mu_i <- c()
   n <- length(x)
   for (i in 1:n){
-    jackknife_sample <- sample(x, length(x), replace = TRUE)
-    jackknife_sample <- jackknife_sample[-i]
+      #jackknife_sample <- sample(x, length(x), replace = TRUE)
+      jackknife_sample <- x[-i] # Andy
     jack_mean <- mean(jackknife_sample)
     mu_i <- append(mu_i, jack_mean)
   }  
