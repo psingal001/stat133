@@ -84,7 +84,7 @@ load("family.rda")
 
 # Create a new data frame 
 # << family.men >> : a data frame that is a subset of family, with only the men
-family.men <- subset(family, family$gender == 's')
+family.men <- subset(family, family$gender == 's') 
 
 # Create a new data frame 
 # << family.young >> : a data frame, subset of family, with only people *under* 40
