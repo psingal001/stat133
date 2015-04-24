@@ -36,7 +36,11 @@ fitModel = function(x, y, degree = 1){
   ### y and x are numeric vectors of the same length
   ### Return the coefficients as a vector 
   ### HINT: Take a look at the repBoot function to see how to use lm()
-  
+  if (degree == 1){
+    coeff <- c(coef(lm(y ~ x)))
+  } else if (degree == 2){
+    coeff <- c(coef(lm(y~x + I(x^2))))
+  }
   return(coeff)
 }
 
@@ -44,10 +48,13 @@ oneBoot = function(data, fit = NULL, degree = 1){
   ###  data are either your data (from call to getData)
   ###  OR fit and errors from fit of line to data
   ###  OR fit and errors from fit of quadratic to data  
-
- 
-  ### Use fitModel to fit a model to this bootstrap Y 
   
+  ### Use fitModel to fit a model to this bootstrap Y 
+  if (fit == NULL){
+    return(genBootY)
+  } else {
+    return (genBootR)
+  }
 }
 
 repBoot = function(data, B = 1000){
