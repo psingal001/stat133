@@ -11,15 +11,14 @@ getData = function(coefs = c(0, 1, 1), xs = 1:5, dupl = 10,
   return(data.frame(x, y))
 }
 
-### 
+###
 genBootY = function(x, y, rep = TRUE){
   ### For each unique x value, take a sample of the
   ### corresponding y values, with replacement.
   ### Return a vector of random y values the same length as y
   ### You can assume that the xs are sorted
   ### Hint use tapply here!
-  
-
+  return (unlist(tapply(unique(x), y, sample, size = length(y), replace = TRUE)))
 }
 
 genBootR = function(fit, err, rep = TRUE){
@@ -27,8 +26,8 @@ genBootR = function(fit, err, rep = TRUE){
   ### Add the errors to the fit to create a y vector
   ### Return a vector of y values the same length as fit
   ### HINT: It can be easier to sample the indices than the values
-  
- 
+  resampled_err <- sample(err, length(fit))
+  return (fit + resampled_err)
 }
 
 fitModel = function(x, y, degree = 1){
@@ -38,7 +37,6 @@ fitModel = function(x, y, degree = 1){
   ### Return the coefficients as a vector 
   ### HINT: Take a look at the repBoot function to see how to use lm()
   
- 
   return(coeff)
 }
 
@@ -49,7 +47,7 @@ oneBoot = function(data, fit = NULL, degree = 1){
 
  
   ### Use fitModel to fit a model to this bootstrap Y 
- 
+  
 }
 
 repBoot = function(data, B = 1000){
