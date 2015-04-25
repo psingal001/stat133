@@ -51,9 +51,11 @@ oneBoot = function(data, fit = NULL, degree = 1){
   
   ### Use fitModel to fit a model to this bootstrap Y 
   if (fit == NULL){
-    return(genBootY)
+    new_y <- genBootY(data$x, data$y)
+    return(fitModel(data$x, new_y, degree))
   } else {
-    return (genBootR)
+    new_y <- genBootR(fit$x, fit$y)
+    return(fitModel(fit$x, new_y, degree))
   }
 }
 
