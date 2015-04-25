@@ -1,3 +1,7 @@
+install.packages("scales")
+library("scales")
+library("ggplot2")
+
 xUnique = 1:5
 trueCoeff = c(0, 1, 1)
 
@@ -132,13 +136,12 @@ bootPlot = function(x, y, coeff, trueCoeff){
   ### Use trueCoeff to add true line/curve - 
   ###  Make the true line/curve stand out
 
-  ggplot(x, y)
-  myCurve <- function(){
-    
-    
+  plot(x, y, type = "l", col = alpha("red", 0.3))
+  myCurve <- function(a, b, c){
+    curve(a*x^2 + b*x + c, from = 0, to = 1000)
   }
   
-  #mapply()
+  mapply(myCurve, coeff)
 }
 
 ### Run your simulation by calling this function
