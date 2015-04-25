@@ -44,7 +44,7 @@ fitModel = function(x, y, degree = 1){
   return(coeff)
 }
 
-oneBoot = function(data, fit = NULL, degree = 1){
+oneBoot = function(data, fit = NULL, err = NULL degree = 1){
   ###  data are either your data (from call to getData)
   ###  OR fit and errors from fit of line to data
   ###  OR fit and errors from fit of quadratic to data  
@@ -54,16 +54,23 @@ oneBoot = function(data, fit = NULL, degree = 1){
     new_y <- genBootY(data$x, data$y)
     return(fitModel(data$x, new_y, degree))
   } else {
-    new_y <- genBootR(fit$x, fit$y)
+    new_y <- genBootR(fit$x, err)
     return(fitModel(fit$x, new_y, degree))
   }
 }
 
 repBoot = function(data, B = 1000){
-  
   ### Set up the inputs you need for oneBoot, i.e.,
   ### create errors and fits for line and quadratic
-
+  
+  lin_model <- fitModel(data$x, data$y, degree = 1)
+  lin_fit <- lin_model$fitted
+  lin_err <- data$y - lin_fit
+  
+  quad_model <- fitModel(data$x, data$y, degree = 2)
+  quad_fit <- quad_model$fitted
+  quad_err <- data$y - quad_fit
+  
   ### replicate a call to oneBoot B times
   ### format the return value so that you have a list of
   ### length 4, one for each set of coefficients
@@ -71,6 +78,27 @@ repBoot = function(data, B = 1000){
   ### and one or two columns, depending on whether the 
   ### fit is for a line or a quadratic
   ### Return this list
+  
+  lin_Y <- data.frame()
+  lin_R <- data.frame()
+  quad_Y <- data.frame()
+  quad_R <- data.frame()
+  
+  for (i in 1:B){
+    coef_lin_Y <- oneBoot(data, degree = 1)
+    lin_Y <- rbind(lin_Y, coef_lin_Y)
+    
+    coef_lin_R <- oneBoot(data, lin_fit, lin_err, degree = 1)
+    lin_R <- rbind(lin_R, coef_lin_R)
+    
+    coef_quad_Y <- oneBoot(data, degree = 2)
+    quad_Y <- rbind(quad_Y, coef_quad_Y)
+    
+    coef_quad_R <- oneBoot(data, quad_fit, quad_err, degree = 2)
+    quad_R <- rbind(quad_R, coef_quad_R)
+  }
+  
+  coeff <- list(lin_Y, lin_R, quad_Y, quad_R)
   
   ### Replicate a call to oneBoot B times for 
   ### each of the four conditions
@@ -104,6 +132,13 @@ bootPlot = function(x, y, coeff, trueCoeff){
   ### Use trueCoeff to add true line/curve - 
   ###  Make the true line/curve stand out
 
+  ggplot(x, y)
+  myCurve <- function(){
+    
+    
+  }
+  
+  #mapply()
 }
 
 ### Run your simulation by calling this function
@@ -120,3 +155,4 @@ runSim = function() {
   }
   return(expt)
 }
+runSim()
