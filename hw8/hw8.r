@@ -68,11 +68,11 @@ repBoot = function(data, B = 1000){
   ### create errors and fits for line and quadratic
   
   lin_model <- fitModel(data$x, data$y, degree = 1)
-  lin_fit <- lin_model$fitted
+  lin_fit <- fitted(lin_model)
   lin_err <- data$y - lin_fit
   
   quad_model <- fitModel(data$x, data$y, degree = 2)
-  quad_fit <- quad_model$fitted
+  quad_fit <- fitted(quad_model)
   quad_err <- data$y - quad_fit
   
   ### replicate a call to oneBoot B times
@@ -116,7 +116,7 @@ repBoot = function(data, B = 1000){
   ### Return this list
   
   return(coeff)
-} 
+}
 
 bootPlot = function(x, y, coeff, trueCoeff){
   ### x and y are the original data
