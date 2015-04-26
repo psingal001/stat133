@@ -1,0 +1,5 @@
+oneBoot: wrong understanding of fit   -2
+bootPlot  -3
+no output due to syntax errors  -2
+
+Score: 13/20
