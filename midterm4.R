@@ -24,7 +24,6 @@ dice_sum <- function(k=2, B=100){
   
   for (i in 1:B){
     die_vals <- sample(1:6, k, replace = T)
-    print(die_vals)
     sum_val <- sum(die_vals)
     dsum <- append(dsum, sum_val)
   }
