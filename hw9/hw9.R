@@ -15,7 +15,7 @@
 # to make bubble charts and motion charts.
 # You need to first install the package:
 
-# install.packages('googleVis')  
+#install.packages('googleVis')  
 # NOTE: you should execute the line above once, then keep it commented out.
 
 # Now open the library:
@@ -35,7 +35,8 @@ head(mtcars)
 # The column should be called "model" and it should have the names of car models 
 # (i.e. the current row names).
 
-# < your code here>
+mtcars <- cbind(mtcars, rownames(mtcars))
+colnames(mtcars)[colnames(mtcars) == 'rownames(mtcars)'] <- c('model')
 
 # Now make a bubble chart using the following instructions:
 # Use 'model', i.e. car model names as labels of bubbles;
@@ -44,13 +45,14 @@ head(mtcars)
 # Use levels of 'gear' to represent color of bubbles;
 # Finally use the 'options' argument to add axis labels and main title.
 
-# optionlist <- < your code here>
-# bub <- gvisBubbleChart( < your code here >)
+optionlist <- list(vAxes="[{title:'val1'}, {title:'val2'}]")
+bub <- gvisBubbleChart(mtcars, idvar = "Model", xvar = mtcars$disp, yvar = mtcars$mpg,
+                       sizevar = mtcars$hp, colorvar = mtcars$gear) #, options = optionlist)
 
 # Now plot your bubble chart output, 'bub', 
 # the chart will show up in a new tab in your web browser.
 
-# < your code here>
+plot(bub)
 
 ##### Motion Chart
 # For examples of motion chart, see: 
@@ -68,22 +70,32 @@ load("WorldBank.RData")
 # containing only the following columns from WordBank:
 # country, year, fertility rate, life expectancy, population and region.
 
-# WorldDat <- < your code here>
+WorldDat <- WorldBank[, c("country", "year", "fertility.rate", "life.expectancy", 
+                          "population", "region")]
 
 # As you can see, there are missing values in this data frame.
 # Get rid of all rows with one or more NAs.
 
-# < your code here >
+WorldDat <- WorldDat[is.na(WorldDat$fertility.rate) == F & 
+                       is.na(WorldDat$life.expectancy) == F & 
+                       is.na(WorldDat$population) == F &
+                       is.na(WorldDat$region) == F &
+                       is.na(WorldDat$year) == F,]
+
 
 # Now make the motion chart using <WorldDat>:
 # (at this point is should have 6 columns and should be free of missing values)
 # Plot life expectancy against fertility rate for each country, 
-# with 'year' as the time dimension, 'region' as the color vector, 'population' as the size vector.
+# with 'year' as the time dimension, 'region' as the color vector, 
+# 'population' as the size vector.
 
 # Notice that you can change theses vectors on the generated motion chart, 
 # for now just use the above instructions as default.
 
-# Motion <- gvisMotionChart( < your code here > )
+Motion <- gvisMotionChart(WorldDat, idvar = "Country", timevar = "Year",
+                          yvar = WorldDat$life.expectancy, 
+                          xvar = WorldDat$fertility.rate, sizevar = WorldDat$population,
+                          colorvar = WorldDat$region)
 
 # Plot your motion chart. It should appear in your web browser. Play around with it!
 plot(Motion)
