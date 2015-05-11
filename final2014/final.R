@@ -55,7 +55,8 @@ email.address <- ""
 # Create [x], a numeric vector of length 1000 with 
 # entries: 5, 10, 15, etc.
 x <- seq(5, 5000, by = 5)
-  
+x <- 5*(1:1000)
+
 # [1 pt]
 # Create [y], a logical vector of length 1000 
 # with y[i]=T if x[i] is divisible by 10, otherwise F
@@ -101,6 +102,8 @@ l <- list(rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5),
           rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5), 
           rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5))
 
+l <- list(); for (i in 1:12){l[[i]] <- rpois(100, 5)}
+
 
 # For the next few tasks you will use the data frame family (size 14x5)
 # LEAVE AS IS:
@@ -145,26 +148,27 @@ mw <- mean(infants$bwt[infants$gestation > 259], na.rm = T)
 #### PART II : Plotting [20 pts]
 
 ##### Flowers [8 pts total, 2+3+3]
-# We will now use the dataset "iris" which is icluded in the R package.
+# We will now use the dataset "iris" which is included in the R package.
 # To look at the dataframe you can just type "iris" at the prompt
 # It is a data frame of size 150x5 with measurements of 4 attributes
 # for 150 flowers, 50 each of 3 different species of irises.
 
 # [2 pts]
 # Make a box plot of Sepal Length by Species (so 3 boxplots in one plot)
-
+boxplot(iris$Sepal.Length ~ iris$Species)
 
 
 # [3 pts]
 # Make a scatterplot of petal width (y-axis) versus petal length (x-axis)
 # The axes labels should be "Petal Length" and "Petal Width",
 # Color the plotting symbol by Species (any 3 colors)
-
+plot(iris$Petal.Length, iris$Petal.Width, col = iris$Species, xlab = "Petal Length",
+     ylab = "Petal Width")
 
 # [3 pt]
 # Make a scatterplot of ( sepal length / petal length) as a function of index (order)
 # Color the plotting symbol by Species (any 3 colors)
-
+plot(iris$Sepal.Length/iris$Petal.Length, col = iris$Species)
 
 ##### We will now use the infant birth data again (data frame infants)
 
@@ -173,13 +177,16 @@ mw <- mean(infants$bwt[infants$gestation > 259], na.rm = T)
 # The plotting symbol should be a red star (*)
 # Put on custom made x-axis and y-axis labels that fully describe the variables
 # Add a vertical line at gestation=259 (full length pregnancy)
-
+plot(infants$bwt, infants$gestation, pch = "*", col = "red")
+abline(h = 259)
 
 # [6 pts]
 # Make a histogram of mother's age (age) and superimpose on it a _blue_ density plot (same variable)
 # Note that the y-axis of the histogram and the density have to be the same...
 # Add x-axis labels
 
+hist(infants$age, prob = T)
+lines(density(infants$age, na.rm = T), col = "blue")
 
 #################################################################
 ##### PART III : apply and by statements [15 pts]
@@ -193,19 +200,19 @@ load("Cache500.rda")
 # Create [first.cache], a vector where each entry is the _first_ element of the
 # corresponding vector in the list Cache500
 
-first.cache <- <your code here>
+first.cache <- sapply(Cache500, function(x) x[1])
 
 # [3 pts]
 # Create [mean.cache], a vector of length 500 where each entry is the mean 
 # of the corresponding element of the list Cache500
 
-mean.cache <- <your code here>
+mean.cache <- sapply(Cache500, mean)
 
 # [2 pts]
 # Create [sd.cache], a vector of length 500 where each entry is the sd
 # of the corresponding element of the list Cache500
 
-sd.cache <- <your code here>
+sd.cache <- sapply(Cache500, sd)
 
 # [4 pts]
 # Create [mean.long.cache], a vector where 
@@ -213,14 +220,14 @@ sd.cache <- <your code here>
 # the mean of Cache500[[i]] IF it has 50 or more entries.
 # NA IF Cache500[[i]] has less than 50 entries.
 
-mean.long.cache <- <your code here>
+mean.long.cache <- sapply(Cache500, function(x) ifelse(length(x) > 50, mean(x), NA))
 
 # Consider again the iris dataset
 # [3 pts]
 # Create a variable [max.petal.width] _a numeric vector of length 3_
 # that has the maximum petal length for each iris species.
 
-max.petal.width <- <your code here>
+max.petal.width <- as.vector(tapply(iris$Petal.Width, iris$Species, max))
 
 #################################################################
 ##### PART IV : functions [20 pts]
@@ -236,7 +243,7 @@ max.petal.width <- <your code here>
 # Example, make a small 2x4 matrix, test:
 # test <- matrix(c(1, 5, 3, 8, 2, 5, 7, 9), ncol=4, byrow=T)
 # > test
-# [,1] [,2] [,3] [,4]
+#      [,1] [,2] [,3] [,4]
 # [1,]    1    5    3    8
 # [2,]    2    5    7    9
 # The output from firstColToNames(test) should be a 2x3 matrix with row names
@@ -245,8 +252,8 @@ max.petal.width <- <your code here>
 # 1    5    3    8
 # 2    5    7    9
 
-firstColToNames <- function(  ){
-  <your code here>
+firstColToNames <- function(x){
+  
   
 }
 

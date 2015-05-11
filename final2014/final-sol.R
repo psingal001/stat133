@@ -167,7 +167,7 @@ t <- table(infants$ed[ infants$married=="Married" & infants$parity==1])
 # Make a scatterplot of ( sepal length / petal length) as a function of index (order)
 # Color the plotting symbol by Species (any 3 colors)
 
- plot(iris$"Sepal.Length"/iris$"Petal.Length", col=as.numeric(iris$Species))
+plot(iris$"Sepal.Length"/iris$"Petal.Length", col=as.numeric(iris$Species))
 
 ##### We will now use the infant birth data again (data frame infants)
 
