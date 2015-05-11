@@ -53,6 +53,7 @@ bub <- gvisBubbleChart(mtcars, idvar = "Model", xvar = mtcars$disp, yvar = mtcar
 # the chart will show up in a new tab in your web browser.
 
 plot(bub)
+#Nothing pops up when I run this program -3 points --Andy
 
 ##### Motion Chart
 # For examples of motion chart, see: 
@@ -96,6 +97,6 @@ Motion <- gvisMotionChart(WorldDat, idvar = "Country", timevar = "Year",
                           yvar = WorldDat$life.expectancy, 
                           xvar = WorldDat$fertility.rate, sizevar = WorldDat$population,
                           colorvar = WorldDat$region)
-
+# ERROR:There is a missmatch between the idvar and timevar specified and the colnames of your data. -3 points -- Andy
 # Plot your motion chart. It should appear in your web browser. Play around with it!
 plot(Motion)

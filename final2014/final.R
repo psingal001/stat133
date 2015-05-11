@@ -54,13 +54,14 @@ email.address <- ""
 # [1 pt]
 # Create [x], a numeric vector of length 1000 with 
 # entries: 5, 10, 15, etc.
-x <- <your code here>
-  
+x <- seq(5, 5000, by = 5)
+x <- 5*(1:1000)
+
 # [1 pt]
 # Create [y], a logical vector of length 1000 
 # with y[i]=T if x[i] is divisible by 10, otherwise F
 
-  y <- <your code here>
+y <- (x %% 10 == 0)
   
   
 # [1 pt]
@@ -68,21 +69,21 @@ x <- <your code here>
 # that are drawn from a standard normal distribution (hint: rnorm)
 # *and* stored in increasing order
 set.seed(42)
-z <- <your code here>
+z <- sort(rnorm(111))
   
   
 # [1 pt]
 # Create [v], a numeric vector with :
 # a random permutation of the even numbers from 2 to 222
   set.seed(31415)
-v <- <your code here>
+v <- sample(seq(2, 222, by = 2), 111)
 
-  
+
 # [1 pt]
 # Create [w], a random permutation of the numeric values of a deck of cards
 # (i.e. just the numbers 1 through 13 each repeated 4 times)
 set.seed(2718)
-w <- <your code here>
+w <- sample(rep(1:13, times = 4), size = 52)
 
   
 # [1 pt]
@@ -90,14 +91,18 @@ w <- <your code here>
 # Exponential random variables (hint: rexp) with rate 3
 # (arrange the values by column, as per default)
 set.seed(344)
-m <- <your code here>
+m <- matrix(rexp(100, rate = 3), ncol = 10)
 
-  
+
 # [1 pt]
 # Create [l], a list with 12 elements, each a vector of length 100.
 # Each vector of length 100 of Poisson (hint:rpois) random variables with mean 5
   set.seed(71)
-<your code here>
+l <- list(rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5), 
+          rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5), 
+          rpois(100, 5), rpois(100, 5), rpois(100, 5), rpois(100, 5))
+
+l <- list(); for (i in 1:12){l[[i]] <- rpois(100, 5)}
 
 
 # For the next few tasks you will use the data frame family (size 14x5)
@@ -106,62 +111,64 @@ load("family.rda")
 
 # [1 pt]
 # Create [f1] a subset of family with only women age 50 or over
-f1 <- <your code here>
+f1 <- family[family$gender == 'f' & family$age > 49,]
 
   
 # [1 pt]
 # Create [f2] a subset of family with only men 6 foot tall or more
-f2 <- <your code here>
+f2 <- family[family$gender == 'm' & family$height >= 72,]
 
-  
+
 # [1 pt]
 # Create [f3] a subset of family of people whose name starts with T
-f3 <- <your code here>
-  
+f3 <- family[substr(family$name, 1, 1) == 'T',]
+
 
 # [1 pt]
 # Create [f4] a subset of family with just the youngest individual (so just one row)
-f4 <- <your code here>
+f4 <- family[family$age == min(family$age),]
 
 
 # for the next two tasks you will use the data frame infants (size 1236x15)
 # LEAVE AS IS:
-load("KaiserBabies.rda") 
+load("KaiserBabies.rda")
 
 # [2 pt]
 # Create a table [t] of the education level ($ed) of all married ($marital) first time ($parity=1) mothers:
-t <- <your code here>
+t <- table(infants$ed, infants$marital, infants$parity == 1)
 
 
 # [2 pt]
-# Calculate [mw], the average birthweight ($bwt) of all babies whose were full term, i.e. gestation equal or more than 259 days.
-mw <- <your code here>
+# Calculate [mw], the average birthweight ($bwt) of all babies whose were full term, 
+# i.e. gestation equal or more than 259 days.
+mw <- mean(infants$bwt[infants$gestation > 259], na.rm = T)
   
   
 #################################################################
 #### PART II : Plotting [20 pts]
 
 ##### Flowers [8 pts total, 2+3+3]
-# We will now use the dataset "iris" which is icluded in the R package.
+# We will now use the dataset "iris" which is included in the R package.
 # To look at the dataframe you can just type "iris" at the prompt
 # It is a data frame of size 150x5 with measurements of 4 attributes
 # for 150 flowers, 50 each of 3 different species of irises.
 
 # [2 pts]
 # Make a box plot of Sepal Length by Species (so 3 boxplots in one plot)
-
+boxplot(iris$Sepal.Length ~ iris$Species)
 
 
 # [3 pts]
 # Make a scatterplot of petal width (y-axis) versus petal length (x-axis)
 # The axes labels should be "Petal Length" and "Petal Width",
 # Color the plotting symbol by Species (any 3 colors)
-
+plot(iris$Petal.Length, iris$Petal.Width, col = iris$Species, xlab = "Petal Length",
+     ylab = "Petal Width")
 
 # [3 pt]
 # Make a scatterplot of ( sepal length / petal length) as a function of index (order)
 # Color the plotting symbol by Species (any 3 colors)
-
+plot(iris$Sepal.Length/iris$Petal.Length, col = iris$Species)
 
 ##### We will now use the infant birth data again (data frame infants)
 
@@ -170,13 +177,16 @@ mw <- <your code here>
 # The plotting symbol should be a red star (*)
 # Put on custom made x-axis and y-axis labels that fully describe the variables
 # Add a vertical line at gestation=259 (full length pregnancy)
-
+plot(infants$bwt, infants$gestation, pch = "*", col = "red")
+abline(h = 259)
 
 # [6 pts]
 # Make a histogram of mother's age (age) and superimpose on it a _blue_ density plot (same variable)
 # Note that the y-axis of the histogram and the density have to be the same...
 # Add x-axis labels
 
+hist(infants$age, prob = T)
+lines(density(infants$age, na.rm = T), col = "blue")
 
 #################################################################
 ##### PART III : apply and by statements [15 pts]
@@ -190,19 +200,19 @@ load("Cache500.rda")
 # Create [first.cache], a vector where each entry is the _first_ element of the
 # corresponding vector in the list Cache500
 
-first.cache <- <your code here>
+first.cache <- sapply(Cache500, function(x) x[1])
 
 # [3 pts]
 # Create [mean.cache], a vector of length 500 where each entry is the mean 
 # of the corresponding element of the list Cache500
 
-mean.cache <- <your code here>
+mean.cache <- sapply(Cache500, mean)
 
 # [2 pts]
 # Create [sd.cache], a vector of length 500 where each entry is the sd
 # of the corresponding element of the list Cache500
 
-sd.cache <- <your code here>
+sd.cache <- sapply(Cache500, sd)
 
 # [4 pts]
 # Create [mean.long.cache], a vector where 
@@ -210,14 +220,14 @@ sd.cache <- <your code here>
 # the mean of Cache500[[i]] IF it has 50 or more entries.
 # NA IF Cache500[[i]] has less than 50 entries.
 
-mean.long.cache <- <your code here>
+mean.long.cache <- sapply(Cache500, function(x) ifelse(length(x) > 50, mean(x), NA))
 
 # Consider again the iris dataset
 # [3 pts]
 # Create a variable [max.petal.width] _a numeric vector of length 3_
 # that has the maximum petal length for each iris species.
 
-max.petal.width <- <your code here>
+max.petal.width <- as.vector(tapply(iris$Petal.Width, iris$Species, max))
 
 #################################################################
 ##### PART IV : functions [20 pts]
@@ -233,7 +243,7 @@ max.petal.width <- <your code here>
 # Example, make a small 2x4 matrix, test:
 # test <- matrix(c(1, 5, 3, 8, 2, 5, 7, 9), ncol=4, byrow=T)
 # > test
-# [,1] [,2] [,3] [,4]
+#      [,1] [,2] [,3] [,4]
 # [1,]    1    5    3    8
 # [2,]    2    5    7    9
 # The output from firstColToNames(test) should be a 2x3 matrix with row names
@@ -242,8 +252,8 @@ max.petal.width <- <your code here>
 # 1    5    3    8
 # 2    5    7    9
 
-firstColToNames <- function(  ){
-  <your code here>
+firstColToNames <- function(x){
+  
   
 }
 

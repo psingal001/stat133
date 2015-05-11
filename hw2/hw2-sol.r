@@ -68,7 +68,7 @@ n.wr <- nrow(wr1500m)
 # wr.name <- your code here
 wr.name <- wr1500m$athlete[wr1500m$times == min(wr1500m$times)]
 ### Hicham El Guerrouj
-
+wr.name
 # Let's look at the relationship between date and time.
 # Q1c. What type of variable (numeric (continuous or discrete), nominal ordinal)
 # are year and times? (no need to use R code to answer this question)
@@ -406,6 +406,7 @@ n.sports <- length(table(athletes$Sport))
 # athTab <- your code here
 # make barplots
 athTab=table(athletes$Sport, athletes$Sex)
+test <- table(athletes$Sex, athletes$Sport)
 barplot(athTab, beside = TRUE)
 barplot(athTab, beside = FALSE)
 
