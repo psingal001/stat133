@@ -264,7 +264,7 @@ prop.rain  <- sapply(rain, function(x) sum(x > 0))/sapply(rain, length)
 # in a separate panel (there will be one empty panel)
 # use an apply statment to the the plotting
 par(mfrow=c(2,3))
-apply(rain, 2, FUN = hist)
+#apply(rain, 2, FUN = hist)
 
 #################################################################
 ##### PART IV : functions [20 pts]
@@ -406,10 +406,10 @@ NumJackpot <- function(k, B){
 # Plot a histogram of the output from NumJackpot (i.e. four histograms)
 par(mfrow = c(2, 2))
 
-hist(NumJackpot(10000, 50))
-hist(NumJackpot(50000, 50))
-hist(NumJackpot(100000, 50))
-hist(NumJackpot(500000, 50))
+hist(NumJackpot(100, 50)) # Andy
+hist(NumJackpot(500, 50))
+hist(NumJackpot(1000, 50))
+hist(NumJackpot(5000, 50))
 
 #################################################################
 ##### PART VI : string manipulation and regular expressions [20 pts]
@@ -461,7 +461,7 @@ match1 <- sort(unique(c(grep("A.T", dna), grep("G.T", dna))))
 # [2 pts]
 # Create a vector [dna2] where you have removed all entries whose length is not a multiple of 3
 # dna2 <- <your code here>
-dna2 <- dna[if(length(dna[i]) %% 3 == 0)]
+#dna2 <- dna[if(length(dna[i]) %% 3 == 0)]
 
 #################################################################
 
