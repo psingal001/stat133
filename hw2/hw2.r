@@ -163,7 +163,8 @@ text(1980, 220, labels = wr1500m$athlete[wr1500m$year == 1998], cex = 5)
 # The data frame SO2012Ctry contains this information.
 # It can be loaded into R with
 
-load("C:/Users/Pranay/src/stat133/assignments/hw2/London2012ALL_ATHLETES.rda")
+# load("C:/Users/Pranay/src/stat133/assignments/hw2/London2012ALL_ATHLETES.rda")
+load("London2012ALL_ATHLETES.rda")
 
 
 #Q6 Take a look at the variables in this data frame.
@@ -290,7 +291,8 @@ symbols(world$longitude, world$latitude, circles = world$Total,
 # and contains information about every athlete who competed 
 # in the Olympics.
 
-load("C:/Users/Pranay/src/stat133/assignments/hw2/London2012ALL_ATHLETES.rda")
+# load("C:/Users/Pranay/src/stat133/assignments/hw2/London2012ALL_ATHLETES.rda")
+load("London2012ALL_ATHLETES.rda")
 
 # There is one observation for each athlete. 
 # (Actually, about 20 athletes have two records if they
