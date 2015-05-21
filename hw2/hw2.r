@@ -51,6 +51,7 @@
 # the hw3 directory in the file WR1500MeterMen.rda.
 
 # load the data
+load("WR1500MeterMen.rda")
 
 # The name of the object loaded is wr1500m
 # The time (in the column "times") in these data are recorded in seconds, 
@@ -164,7 +165,7 @@ text(1980, 220, labels = wr1500m$athlete[wr1500m$year == 1998], cex = 5)
 # It can be loaded into R with
 
 # load("C:/Users/Pranay/src/stat133/assignments/hw2/London2012ALL_ATHLETES.rda")
-load("London2012ALL_ATHLETES.rda")
+load("SummerOlympics2012Ctry.rda")
 
 
 #Q6 Take a look at the variables in this data frame.
@@ -316,7 +317,7 @@ n.athletes <- nrow(athletes)
 # How many women competed?
 
 # What proportion of the participants were women?
-frac.women <- length(unique(Name[Sex == "F"])) / n.athletes
+frac.women <- length(unique(athletes$Sex == "F")) / n.athletes
 
 # How many sports were there?
 n.sports <- length(unique(athletes$Sport))
