@@ -4,6 +4,7 @@
 # leave this here:
 set.seed(123456)
 
+library(stringr)
 
 #### Simulation
 # Write a function, [dice_sum()], that takes as input:
