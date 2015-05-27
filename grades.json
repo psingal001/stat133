@@ -64,14 +64,14 @@
         }, 
         "final-feiw50hj": {
             "note": "", 
-            "hash": "cf3529802823131502f385015b85cc55391e8aa0", 
-            "earned": 72, 
+            "hash": "f02548df941150dcad11054b3ff2d6186eccd2df", 
+            "earned": 74, 
             "possible": 100, 
             "penalty": 0, 
             "parts": {
                 "final": {
                     "possible": 69, 
-                    "earned": 45
+                    "earned": 47
                 }, 
                 "final_fig": {
                     "possible": 31, 
