@@ -51,14 +51,14 @@
         }, 
         "midterm4": {
             "note": "", 
-            "hash": "ab94324c1a61c6e432a633608b394bf34c536ebb", 
-            "earned": 22, 
+            "hash": "cd213733d1b8ef528caf9428304e8f2d70be6b5e", 
+            "earned": 29, 
             "possible": 27, 
             "penalty": 0, 
             "parts": {
                 "midterm4": {
                     "possible": 30, 
-                    "earned": 22
+                    "earned": 29
                 }
             }
         }, 
